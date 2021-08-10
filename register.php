@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,10 +26,17 @@
     <input type="password" name="password" placeholder="Введите свой пароль">
     <label>Подтверждение пароля</label>
     <input type="password" name="password_confirm" placeholder="подтвердите пароль">
-    <button>Войти</button>
+    <button type="submit">Зарегистрироваться</button>
     <p>
         У вас уже есть аккаунт? - <a href="login.php">Авторизация</a> | <a href="index.php">Закрыть</a>
     </p>
+    <?php
+        if ($_SESSION['message']){
+            echo '<p class="msg"> ' . $_SESSION['message'] . '</p>>';
+        }
+        unset($_SESSION['message']);
+    ?>
+
 </form>
 </body>
 </html>

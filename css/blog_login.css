@@ -43,3 +43,11 @@ button {
     cursor: pointer;
 }
 
+.msg {
+    border: 2px solid #d96b32;
+    border-radius: 3px;
+    padding: 10px;
+    text-align: center;
+
+}
+
