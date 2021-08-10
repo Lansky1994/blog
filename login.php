@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post">
         <label>Логин</label>
         <input type="text" placeholder="Введите совй логин">
         <label>Пароль</label>

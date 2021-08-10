@@ -9,19 +9,19 @@
     <link rel="stylesheet" href="css/blog_login.css">
 </head>
 <body>
-<form action="" method="post">
+<form action="vendor/signup.php" method="post" enctype="multipart/form-data">
     <label>Имя</label>
-    <input type="text" placeholder="Введите свое имя">
+    <input type="text" name="name" placeholder="Введите свое имя">
     <label>Логин</label>
-    <input type="text" placeholder="Придумайте логин">
+    <input type="text" name="login" placeholder="Придумайте логин">
     <label>Потча</label>
-    <input type="email" placeholder="Укажите свой email">
+    <input type="email" name="email" placeholder="Укажите свой email">
     <label>Изображение профиля</label>
-    <input type="file">
+    <input type="file" name="avatar">
     <label>Пароль</label>
-    <input type="password" placeholder="Введите свой пароль">
+    <input type="password" name="password" placeholder="Введите свой пароль">
     <label>Подтверждение пароля</label>
-    <input type="password" placeholder="подтвердите пароль">
+    <input type="password" name="password_confirm" placeholder="подтвердите пароль">
     <button>Войти</button>
     <p>
         У вас уже есть аккаунт? - <a href="login.php">Авторизация</a> | <a href="index.php">Закрыть</a>
