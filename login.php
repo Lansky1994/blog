@@ -17,9 +17,9 @@
 
     <form action="vendor/signin.php" method="post">
         <label>Логин</label>
-        <input type="text" placeholder="Введите совй логин">
+        <input type="text" name="login" placeholder="Введите совй логин">
         <label>Пароль</label>
-        <input type="password" placeholder="Введите свой пароль">
+        <input type="password" name="password" placeholder="Введите свой пароль">
         <button type="submit">Войти</button>
         <p>
             У вас нет аккаунта? - <a href="register.php">Регистрация</a> | <a href="index.php">Закрыть</a>

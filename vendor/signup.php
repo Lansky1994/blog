@@ -28,6 +28,6 @@
         header('Location: ../register.php');
     }
 
-?>
+
 
     
