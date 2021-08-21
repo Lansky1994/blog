@@ -56,3 +56,7 @@ button {
     color: #d02c6b;
 }
 
+.msblog {
+    flex: 0 0 auto;
+    width: 100%;
+}
