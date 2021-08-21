@@ -11,11 +11,14 @@
     $statement->bindParam(":login", $login);
     $statement->bindParam(":password", $password);
     $statement->execute();
+    $statement2 = $connect->prepare("SELECT FOUND_ROWS()");
+    $statement2->execute();
+    $row_count =$statement2->fetchColumn();
 
 //    $check_user = mysqli_query($connect, "SELECT * FROM `blogs` WHERE `login` = '$login' AND `password` = '$password'");
 
 //    echo mysqli_num_rows($statement);die();
-    if ($statement > 0) {
+    if ($row_count > 0) {
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         $_SESSION['user'] = [
             "avatar" => $user['avatar'],
