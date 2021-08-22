@@ -66,3 +66,10 @@
         </nav>
     </div>
 </div>
+<main class="container">
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <div class="col-md-6 px-0 w-100">
+            <h1 class="display-4 fst-italic">Prosto text ni o cem</h1>
+            <p class="lead my-3">Text ni o cem umnjojeniy na x3. Text ni o cem umnjojeniy na x3. Text ni o cem umnjojeniy na x3</p>
+        </div>
+    </div>

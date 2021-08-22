@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if($_SESSION['user']) {s
+    if($_SESSION['user']) {
         header('Location: profile.php');
     }
 ?>
