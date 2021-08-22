@@ -1,0 +1,21 @@
+{
+    "name": "lansky/blog",
+    "description": "Blog on PHP",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Lansky\\Blog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lansky",
+            "email": "lansky1994@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "4.*",
+        "twig/twig": "^3.3"
+    }
+}
