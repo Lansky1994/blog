@@ -44,7 +44,7 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <a class="link-secondary" href="#">Subscribe</a>
+                <a class="link-secondary" href="#">О нашем пиздатеньком блоге</a>
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="/index.php">Events planing</a>
@@ -59,12 +59,7 @@
         </div>
     </header>
 
-    <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary" href="/about.php">О нашем пиздатеньком блоге</a>
-            <a class="p-2 link-secondary" href="/advertising.php">Реклама</a>
-        </nav>
-    </div>
+
 </div>
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
