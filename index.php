@@ -12,7 +12,6 @@ $loader = new FilesystemLoader('templates');
 $view = new Environment($loader);
 
 function session(){
-    session_start();
     if($_SESSION['user']) {
         header('Location: profile.php');
     }
@@ -45,8 +44,9 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
 
 $app->get('/signin', function (Request $request, Response $response, $args) use ($view) {
     $body = $view->render('login.twig', [
-        'session' => session(),
-        'session2' => '<p class="msg">'.$_SESSION['msg'].'</p>'
+        'session' => '<p>'.'<?php'.session_start().'?>'.'</p>',
+        'session3' => '<p class="msg">'.$_SESSION['message'].'</p>',
+        'session4' => '<p>'.'<?php'.unset.($_SESSION['message']).'?>'.'</p>'
 
     ]);
     $response->getBody()->write($body);

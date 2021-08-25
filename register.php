@@ -35,7 +35,7 @@
     </p>
     <?php
         if ($_SESSION['message']){
-            echo '<p class="msg"> ' . $_SESSION['message'] . '</p>>';
+            echo '<p class="msg"> ' . $_SESSION['message'] . '</p>';
         }
         unset($_SESSION['message']);
     ?>

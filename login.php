@@ -1,11 +1,8 @@
 <?php
     session_start();
-    function session(){
-        if($_SESSION['user']) {
-            header('Location: profile.php');
-        }
+    if($_SESSION['user']) {
+        header('Location: profile.php');
     }
-    session();
 ?>
 
 <!doctype html>
@@ -31,13 +28,11 @@
             У вас нет аккаунта? - <a href="register.php">Регистрация</a> | <a href="asdf.php">Закрыть</a>
         </p>
         <?php
-        function ss2(){
             if ($_SESSION['message']){
                 echo '<p class="msg"> ' . $_SESSION['message'] . '</p>';
             }
-        }
-        ss2();
-        unset($_SESSION['message']);
+
+            unset($_SESSION['message']);
         ?>
     </form>
 </body>
