@@ -29,7 +29,7 @@
         header('Location: ../profile.php');
     } else {
         $_SESSION['message'] = 'Не верный логин или пароль';
-        header('Location: ../login.php');
+        header('Location: ../signin');
     }
 ?>
 

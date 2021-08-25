@@ -27,7 +27,7 @@
         $statement->execute();
 //        mysqli_query($connect, "INSERT INTO `blogs` (`name`, `login`, `email`, `password`, `avatar`) VALUES ('$name', '$login', '$email', '$password', '$path')");
         $_SESSION['message'] = 'Регистрация прошла успешно';
-        header('Location: ../login.php');
+        header('Location: ../login.twig');
 
     } else {
         $_SESSION['message'] = 'Пароли не совпадают';
