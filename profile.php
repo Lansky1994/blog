@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!$_SESSION['user']) {
-    header('Location: login.twig');
+    header('Location: /signin');
 }
 ?>
 

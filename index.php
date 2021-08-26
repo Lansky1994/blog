@@ -11,21 +11,6 @@ require __DIR__ . '/vendor/autoload.php';
 $loader = new FilesystemLoader('templates');
 $view = new Environment($loader);
 
-function session(){
-    if($_SESSION['user']) {
-        header('Location: profile.php');
-    }
-}
-
-
-if ($_SESSION['message']){
-    echo '<p class="msg"> ' . $_SESSION['message'] . '</p>';
-}
-
-unset($_SESSION['message']);
-
-
-
 $app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response, $args) use ($view) {
@@ -43,16 +28,40 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
 });
 
 $app->get('/signin', function (Request $request, Response $response, $args) use ($view) {
+
+    session_start();
+
+    if($_SESSION['user']){
+       header('Location: profile.php');
+       return;
+    }
+
+
+    function message ($pr) {
+        if ($_SESSION[$pr]){
+            return '<p class="msg"> ' . $_SESSION['message'] . '</p>';
+        }
+    }
+
+    function off ($pr) {
+        unset($_SESSION[$pr]);
+    }
+
     $body = $view->render('login.twig', [
-        'session' => '<p>'.'<?php'.session_start().'?>'.'</p>',
-        'session3' => '<p class="msg">'.$_SESSION['message'].'</p>',
-        'session4' => '<p>'.'<?php'.unset.($_SESSION['message']).'?>'.'</p>'
+        'session3' => '<p>'.message('message').'</p>',
+        'session4' => '<p>'.off('message').'</p>'
 
     ]);
     $response->getBody()->write($body);
     return $response;
 });
 
-
+$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view) {
+    $body = $view->render('post.twig', [
+        'url_key' => $args['url_key']
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
 
 $app->run();
