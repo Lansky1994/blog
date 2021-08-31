@@ -32,7 +32,7 @@ $app->get('/signin', function (Request $request, Response $response, $args) use 
     session_start();
 
     if($_SESSION['user']){
-       header('Location: profile.php');
+       header('Location: /profile');
        return;
     }
 
@@ -61,7 +61,7 @@ $app->get('/signup', function (Request $request, Response $response, $args) use 
     session_start();
 
     if ($_SESSION['user']){
-        header('Location: profile.php');
+        header('Location: /profile');
         return;
     }
 
@@ -83,6 +83,22 @@ $app->get('/signup', function (Request $request, Response $response, $args) use 
     return $response;
 });
 
+$app->get('/profile', function (Request $request, Response  $response, $args) use ($view) {
+    session_start();
+
+    if(!$_SESSION['user']) {
+        header('Location: /signin');
+        return;
+    }
+
+    $body = $view->render('profile.twig', [
+        'session' => $_SESSION['user']['avatar'],
+        'session2' => $_SESSION['user']['name'],
+        'session3' => $_SESSION['user']['email']
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
 
 $app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view) {
     $body = $view->render('post.twig', [

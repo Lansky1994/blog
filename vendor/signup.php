@@ -8,7 +8,7 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
-    if ($password === $password_confirm and !empty($password)) {
+    if ($password === $password_confirm and !empty($password) and !empty($name and !empty($login))) {
 
         $path = '../img/' . time() . $_FILES['avatar']['name'];
         if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $path)) {
@@ -29,6 +29,15 @@
         $_SESSION['message'] = 'Регистрация прошла успешно';
         header('Location: /signin');
 
+    } else if (empty($name)){
+        $_SESSION['message'] = 'Введите имя';
+        header('Location: /signup');
+    } else if (empty($login)) {
+        $_SESSION['message'] = 'Введите логин';
+        header('Location: /signup');
+    } else if (empty($email)) {
+        $_SESSION['message'] = 'Введите email';
+        header('Location: /signup');
     } else {
         $_SESSION['message'] = 'Пароли не совпадают';
         header('Location: /signup');

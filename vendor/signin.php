@@ -26,7 +26,7 @@
             'name' => $user['name'],
             'email' => $user['email']
         ];
-        header('Location: ../profile.php');
+        header('Location: ../profile');
     } else {
         $_SESSION['message'] = 'Не верный логин или пароль';
         header('Location: /signin');
