@@ -56,6 +56,34 @@ $app->get('/signin', function (Request $request, Response $response, $args) use 
     return $response;
 });
 
+$app->get('/signup', function (Request $request, Response $response, $args) use ($view) {
+
+    session_start();
+
+    if ($_SESSION['user']){
+        header('Location: profile.php');
+        return;
+    }
+
+    function message ($pr) {
+        if ($_SESSION[$pr]) {
+            return '<p class="msg">' . $_SESSION[$pr] . '</p>';
+        }
+    }
+
+    function off ($pr) {
+        unset($_SESSION[$pr]);
+    }
+
+    $body = $view->render('register.twig', [
+        'session' => '<p>'.message('message').'</p>',
+        'session2' => '<p>'.off('message').'</p>'
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
+
+
 $app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view) {
     $body = $view->render('post.twig', [
         'url_key' => $args['url_key']
@@ -63,5 +91,6 @@ $app->get('/{url_key}', function (Request $request, Response $response, $args) u
     $response->getBody()->write($body);
     return $response;
 });
+
 
 $app->run();
