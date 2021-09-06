@@ -6,6 +6,7 @@ use Slim\Factory\AppFactory;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
+
 require __DIR__ . '/vendor/autoload.php';
 
 $loader = new FilesystemLoader('templates');
@@ -29,8 +30,12 @@ $postMapper = new PostMapper($connect);
 
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view) {
-    $body = $view->render('index.twig');
+$app->get('/', function (Request $request, Response $response, $args) use ($view, $postMapper) {
+
+    $posts = $postMapper->getList('ASC');
+    $body = $view->render('index.twig', [
+        'posts' => $posts
+    ]);
     $response->getBody()->write($body);
     return $response;
 });
