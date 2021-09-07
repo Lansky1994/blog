@@ -8,7 +8,6 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
 
-
 require __DIR__ . '/vendor/autoload.php';
 
 $loader = new FilesystemLoader('templates');
@@ -116,6 +115,16 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
         'session' => $_SESSION['user']['avatar'],
         'session2' => $_SESSION['user']['name'],
         'session3' => $_SESSION['user']['email']
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
+
+$app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connect){
+    $latestPost = new LatestPosts($connect);
+    $posts = $latestPost->get(2);
+    $body = $view->render('blog.twig', [
+        'posts' => $posts
     ]);
     $response->getBody()->write($body);
     return $response;
