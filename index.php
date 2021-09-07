@@ -1,11 +1,13 @@
 <?php
 
+use Blog\LatestPosts;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
+
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -26,13 +28,11 @@ try {
     die();
 }
 
-$postMapper = new PostMapper($connect);
-
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view, $postMapper) {
-
-    $posts = $postMapper->getList('ASC');
+$app->get('/', function (Request $request, Response $response) use ($view, $connect) {
+    $latestPost = new LatestPosts($connect);
+    $posts = $latestPost->get(2);
     $body = $view->render('index.twig', [
         'posts' => $posts
     ]);
@@ -40,7 +40,7 @@ $app->get('/', function (Request $request, Response $response, $args) use ($view
     return $response;
 });
 
-$app->get('/about', function (Request $request, Response $response, $args) use ($view) {
+$app->get('/about', function (Request $request, Response $response) use ($view) {
     $body = $view->render('about.twig', [
         'name' => 'Artsiom'
     ]);
@@ -48,7 +48,7 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
     return $response;
 });
 
-$app->get('/signin', function (Request $request, Response $response, $args) use ($view) {
+$app->get('/signin', function (Request $request, Response $response) use ($view) {
 
     session_start();
 
@@ -77,7 +77,7 @@ $app->get('/signin', function (Request $request, Response $response, $args) use 
     return $response;
 });
 
-$app->get('/signup', function (Request $request, Response $response, $args) use ($view) {
+$app->get('/signup', function (Request $request, Response $response) use ($view) {
 
     session_start();
 
@@ -104,7 +104,7 @@ $app->get('/signup', function (Request $request, Response $response, $args) use 
     return $response;
 });
 
-$app->get('/profile', function (Request $request, Response  $response, $args) use ($view) {
+$app->get('/profile', function (Request $request, Response  $response) use ($view) {
     session_start();
 
     if(!$_SESSION['user']) {
@@ -121,7 +121,8 @@ $app->get('/profile', function (Request $request, Response  $response, $args) us
     return $response;
 });
 
-$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $postMapper) {
+$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $connect) {
+    $postMapper = new PostMapper($connect);
     $post = $postMapper->getBYUrlKey((string) $args['url_key']);
 
     if (empty($post)) {

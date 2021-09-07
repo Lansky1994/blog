@@ -18,12 +18,14 @@
                 <div class="col p-4 d-flex flex-column position-static">
 {#                    <strong class="d-inline-block mb-2 text-primary">World</strong>#}
                     <h3 class="mb-0">{{ post.title|escape }}</h3>
-                    <div class="mb-1 text-muted">{{ post.published_date|date("F d, Y") }}</div>
+                    <div class="mb-1 text-muted">Artsiom Lansky | {{ post.published_date|date("F d, Y") }}</div>
                     <p class="card-text mb-auto">{{ post.description|escape }}</p>
                     <a href="/{{ post.url_key }}" class="stretched-link">Continue reading</a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img src="https://dummyimage.com/200X250/55595c/eceeef" alt="{{ post.title|escape }}">
+                    {% if post.image_path is not null %}
+                        <img src="{{ post.image_path }}" class="img-fluid" alt="{{ post.title|escape }}">
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
