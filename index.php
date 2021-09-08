@@ -122,7 +122,7 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
 
 $app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connect){
     $latestPost = new LatestPosts($connect);
-    $posts = $latestPost->get(2);
+    $posts = $latestPost->get(3);
     $body = $view->render('blog.twig', [
         'posts' => $posts
     ]);
