@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 use Blog\LatestPosts;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -7,6 +11,8 @@ use Slim\Factory\AppFactory;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
+
+
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -17,6 +23,8 @@ $config = include 'config/database.php';
 $dsn = $config['dsn'];
 $username = $config['username'];
 $password = $config['password'];
+
+
 
 try {
     $connect = new PDO($dsn, $username, $password);
@@ -29,9 +37,10 @@ try {
 
 $app = AppFactory::create();
 
+
 $app->get('/', function (Request $request, Response $response) use ($view, $connect) {
     $latestPost = new LatestPosts($connect);
-    $posts = $latestPost->get(2);
+    $posts = $latestPost->get(3);
     $body = $view->render('index.twig', [
         'posts' => $posts
     ]);
@@ -120,9 +129,14 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
     return $response;
 });
 
-$app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connect){
-    $latestPost = new LatestPosts($connect);
-    $posts = $latestPost->get(2);
+
+$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect){
+    $latestPost = new PostMapper($connect);
+
+    $page = isset($args['page']) ? (int) $args['page'] : 1;
+    $limit = 2;
+
+    $posts = $latestPost->getList($page, $limit, 'DESC');
     $body = $view->render('blog.twig', [
         'posts' => $posts
     ]);
