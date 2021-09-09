@@ -129,12 +129,6 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
     return $response;
 });
 
-<<<<<<< HEAD
-$app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connect){
-    $latestPost = new LatestPosts($connect);
-    $posts = $latestPost->get(3);
-=======
-
 $app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect){
     $latestPost = new PostMapper($connect);
 
@@ -142,7 +136,7 @@ $app->get('/blog[/{page}]', function (Request $request, Response $response, $arg
     $limit = 2;
 
     $posts = $latestPost->getList($page, $limit, 'DESC');
->>>>>>> 9cdde8dfe7246275cf5a648efe663b8d209e5c7a
+
     $body = $view->render('blog.twig', [
         'posts' => $posts
     ]);
