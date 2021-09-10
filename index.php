@@ -132,7 +132,6 @@ $app->get('/blog[/{page}]', function (Request $request, Response $response, $arg
     $limit = 2;
     $posts = $latestPost->getList($page, $limit, 'DESC');
 
-<<<<<<< HEAD
     if (is_string($page)) {
         $body = $view->render('not-found.twig');
     } else {
@@ -141,11 +140,6 @@ $app->get('/blog[/{page}]', function (Request $request, Response $response, $arg
         ]);
     }
 
-=======
-    $body = $view->render('blog.twig', [
-        'posts' => $posts
-    ]);
->>>>>>> 1672ac93e7387627df99aa6068ac4bee36610dc8
     $response->getBody()->write($body);
     return $response;
 });
