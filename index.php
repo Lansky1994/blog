@@ -3,7 +3,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
 use Blog\LatestPosts;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -11,7 +10,6 @@ use Slim\Factory\AppFactory;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
-
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -23,8 +21,6 @@ $config = include 'config/database.php';
 $dsn = $config['dsn'];
 $username = $config['username'];
 $password = $config['password'];
-
-
 
 try {
     $connect = new PDO($dsn, $username, $password);
@@ -131,18 +127,25 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
 
 
 $app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect){
-    $latestPost = new PostMapper($connect);
 
+    $latestPost = new PostMapper($connect);
     $page = isset($args['page']) ? (int) $args['page'] : 1;
     $limit = 2;
-
     $posts = $latestPost->getList($page, $limit, 'DESC');
-    $body = $view->render('blog.twig', [
-        'posts' => $posts
-    ]);
+
+    if (is_string($page)) {
+        $body = $view->render('not-found.twig');
+    } else {
+        $body = $view->render('blog.twig', [
+            'posts' => $posts
+        ]);
+    }
+
     $response->getBody()->write($body);
     return $response;
 });
+
+$app->redirect('/blog/', '/blog/1');
 
 $app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $connect) {
     $postMapper = new PostMapper($connect);
