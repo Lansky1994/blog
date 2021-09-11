@@ -40,9 +40,9 @@ $app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response) use ($view, $connect) {
     $latestPost = new LatestPosts($connect);
-    $posts = $latestPost->get(3);
+    $posts = $latestPost->get(2);
     $body = $view->render('index.twig', [
-        'posts' => $posts
+        'posts' => $posts,
     ]);
     $response->getBody()->write($body);
     return $response;
@@ -134,11 +134,9 @@ $app->get('/blog[/{page}]', function (Request $request, Response $response, $arg
 
     $page = isset($args['page']) ? (int) $args['page'] : 1;
     $limit = 2;
-
     $posts = $latestPost->getList($page, $limit, 'DESC');
-
     $body = $view->render('blog.twig', [
-        'posts' => $posts
+        'posts' => $posts,
     ]);
     $response->getBody()->write($body);
     return $response;

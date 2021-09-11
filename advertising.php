@@ -1,8 +1,4 @@
 <?php
-include_once 'includ/header.php';
-?>
-
-
-<?php
-include_once 'includ/footer.php'
-?>
+$a = 'page';
+$page = isset($a['page']) ? (int) $a['page'] : 1;
+echo $page;
