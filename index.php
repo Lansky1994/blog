@@ -127,28 +127,25 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
 
 $app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect){
 
-    $latestPost = new PostMapper($connect);
-    $page = isset($args['page']) ? (int) $args['page'] : 1;
+    $postMapper = new PostMapper($connect);
+    //$page = isset($args['page']) ? (int) $args['page'] : 1;
     $limit = 2;
-    $posts = $latestPost->getList($page, $limit, 'DESC');
-<<<<<<< HEAD
-    $body = $view->render('blog.twig', [
-        'posts' => $posts,
-    ]);
-=======
 
-    if (is_string($page)) {
+    $page = (int) $args['page'];
+
+    if ($page == 0) {
         $body = $view->render('not-found.twig');
-    } else {
+    }else{
+        $posts = $postMapper->getList($page, $limit, 'DESC');
         $body = $view->render('blog.twig', [
             'posts' => $posts
         ]);
     }
 
->>>>>>> 8e2e43d6668cccb561528908b5f94f10e028d459
     $response->getBody()->write($body);
     return $response;
 });
+
 
 $app->redirect('/blog/', '/blog/1');
 
