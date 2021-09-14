@@ -12,6 +12,7 @@ use Twig\Loader\FilesystemLoader;
 use Blog\PostMapper;
 
 
+
 require __DIR__ . '/vendor/autoload.php';
 
 $loader = new FilesystemLoader('templates');
@@ -33,6 +34,15 @@ try {
 
 $app = AppFactory::create();
 
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+
+$errorMiddleware->setErrorHandler(\Slim\Exception\HttpNotFoundException::class, function ( Request $request, Throwable $exception) use ($view) {
+    $response = new \Slim\Psr7\Response();
+
+    $body = $view->render('not-found.twig');
+    $response->getBody()->write($body);
+    return $response->withStatus(404);
+});
 
 $app->get('/', function (Request $request, Response $response) use ($view, $connect) {
     $latestPost = new LatestPosts($connect);
@@ -125,24 +135,22 @@ $app->get('/profile', function (Request $request, Response  $response) use ($vie
     return $response;
 });
 
-$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect){
+$app->get('/blog/{page:[0-9]+}', function (Request $request, Response $response, $args) use ($view, $connect){
 
-    $latestPost = new PostMapper($connect);
-    $page = isset($args['page']) ? (int) $args['page'] : 1;
+    $postMapper = new PostMapper($connect);
+
+    //$page = isset($args['page']) ? (int) $args['page'] : 1;
     $limit = 2;
-    $posts = $latestPost->getList($page, $limit, 'DESC');
 
-    if (is_string($page)) {
-        $body = $view->render('not-found.twig');
-    } else {
-        $body = $view->render('blog.twig', [
-            'posts' => $posts
-        ]);
-    }
-
+    $page = (int) $args['page'];
+    $posts = $postMapper->getList($page, $limit, 'DESC');
+    $body = $view->render('blog.twig', [
+        'posts' => $posts
+    ]);
     $response->getBody()->write($body);
     return $response;
 });
+$app->redirect('/blog', '/blog/1');
 
 $app->redirect('/blog/', '/blog/1');
 
