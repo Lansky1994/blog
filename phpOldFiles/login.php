@@ -13,12 +13,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Авторизация</title>
-    <link rel="stylesheet" href="css/blog_login.css">
+    <link rel="stylesheet" href="../css/blog_login.css">
 
 </head>
 <body>
 
-    <form action="vendor/signin.php" method="post">
+    <form action="../vendor/signin.php" method="post">
         <label>Логин</label>
         <input type="text" name="login" placeholder="Введите совй логин">
         <label>Пароль</label>
