@@ -21,5 +21,9 @@ class LatestPosts
         $statement->execute();
 
         return $statement->fetchAll();
+
+
     }
+
+//SELECT * FROM post WHERE post_id NOT IN (SELECT MAX(post_id) FROM post) ORDER BY post_id DESC
 }
